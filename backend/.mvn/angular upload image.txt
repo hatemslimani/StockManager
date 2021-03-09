@@ -1,0 +1,62 @@
+import { Component } from '@angular/core';
+import { FileUploadService } from './file-upload.service';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent {
+
+  constructor(private fileUploadService: FileUploadService) { }
+
+  etudiant = {
+    name: '',
+    age: ''
+  };
+
+  selectedFiles: File[];
+
+  onFileSelected(event) {
+    this.selectedFiles = event.target.files;
+  }
+
+  uploadFiles() {
+    this.fileUploadService.uploadFiles(this.selectedFiles, this.etudiant)
+      .subscribe(response => {
+        console.log('Files uploaded successfully:', response);
+      }, error => {
+        console.error('Error uploading files:', error);
+      });
+  }
+}
+
+
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class FileUploadService {
+
+  constructor(private http: HttpClient) { }
+
+  uploadFiles(files: File[], etudiant: any) {
+    const formData = new FormData();
+    files.forEach(file => {
+      formData.append('files', file);
+    });
+    formData.append('name', etudiant.name);
+    formData.append('age', etudiant.age);
+DESKTOP-OB16SQ5\SQLEXPRESS
+    return this.http.post<any>('https://your-api-url/api/files/upload', formData);
+  }
+}
+
+
+
+
+     <!--<connectionStrings>
+      <add name="efERP" connectionString="metadata=res://*/Models.dbERP.csdl|res://*/Models.dbERP.ssdl|res://*/Models.dbERP.msl;provider=System.Data.SqlClient;provider connection string=&quot;Data Source=DESKTOP-OB16SQ5\SQLEXPRESS;Initial Catalog=hatem1;Integrated Security=True;App=EntityFramework&quot;" providerName="System.Data.EntityClient" />
+    </connectionStrings>-->

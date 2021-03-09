@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.19.1.final using JasperReports Library version 6.19.1-867c00bf88cd4d784d404379d6c05e1b419e8a4c  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="commandeAchat" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="35e79764-c1bf-4c90-aa9b-a915a712ca40">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<parameter name="totalPrix" class="java.lang.String"/>
+	<parameter name="totalQte" class="java.lang.String"/>
+	<parameter name="nom" class="java.lang.String"/>
+	<parameter name="adressFournisseur" class="java.lang.String"/>
+	<parameter name="codeCmd" class="java.lang.String"/>
+	<parameter name="dateCree" class="java.lang.String"/>
+	<field name="lib_produit" class="java.lang.String"/>
+	<field name="prix_achat" class="java.lang.Integer"/>
+	<field name="quantiteDispo_produit" class="java.lang.Integer"/>
+	<field name="taxe_produit" class="java.lang.Integer"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="250" splitType="Stretch">
+			<rectangle>
+				<reportElement x="2" y="150" width="550" height="100" uuid="97eecd94-854d-4f58-862a-7ce31561e941"/>
+			</rectangle>
+			<line>
+				<reportElement x="2" y="180" width="550" height="1" uuid="2a20b938-5c9f-47da-afcd-64031206a8ca"/>
+			</line>
+			<staticText>
+				<reportElement mode="Opaque" x="2" y="150" width="550" height="30" forecolor="#FFFFFF" backcolor="#7A7171" uuid="50df00b6-3773-42f9-9f6d-1dfeedfd8c19"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[fournisseur]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="2" y="180" width="190" height="30" uuid="b01a9220-de7f-49ee-a17a-483ad1b0313b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{adressFournisseur}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="2" y="220" width="190" height="30" uuid="aa1743cb-063c-4674-9fc2-fb54d6064567"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{adressFournisseur}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="290" y="100" width="100" height="21" uuid="b1bc3441-cd06-433a-9e00-c1179f833bf7"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="DejaVu Sans Mono" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{nom}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="100" y="100" width="180" height="21" uuid="c833e4fc-aa4c-42f7-b9ce-d454b32c1a05"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="DejaVu Sans Mono" size="14"/>
+				</textElement>
+				<text><![CDATA[Date de création :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="100" y="70" width="180" height="20" uuid="610f8f60-f8b6-46da-8876-e2a94b751596"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="DejaVu Sans Mono" size="14"/>
+				</textElement>
+				<text><![CDATA[Réeférences :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="290" y="70" width="100" height="20" uuid="224032cb-1dad-4fff-ba86-764d4865dbb0"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="DejaVu Sans Mono" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{adressFournisseur}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="110" y="12" width="390" height="40" uuid="e64f40ba-9002-4c3a-b5fb-77730017b8bc"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="26" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Ordre d'achat"]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="40" y="5" width="60" height="55" uuid="70053c48-8c9a-4214-ae89-25df7191f1fc"/>
+				<imageExpression><![CDATA["C:/Users/hatem/Desktop/png-clipart-computer-icons-inventory-management-warehouse-retail-s-miscellaneous-blue-thumbnail.png"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch">
+			<textField>
+				<reportElement x="470" y="20" width="90" height="20" uuid="bc936e4b-3518-46fd-b417-9b8e643e2ddc"/>
+				<textElement textAlignment="Left">
+					<font fontName="DejaVu Sans Mono" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_COUNT}]]></textFieldExpression>
+			</textField>
+			<textField pattern="MMMMM dd, yyyy">
+				<reportElement x="0" y="20" width="100" height="30" uuid="6ec21939-462c-4e2e-b88a-4149d5d2cdba"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>
