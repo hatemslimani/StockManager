@@ -1,0 +1,218 @@
+<div class="row">
+    <div class="col-md-12">
+        <app-breadcrumb [items]="breadcrumbItems"></app-breadcrumb>
+    </div>
+</div>
+
+<div class="table-responsive" [hidden]="!showlist">
+    <div class="card text-center cc">
+        <div class="card-body">
+            <app-data-table [columns]="columns" [data]="list_orders" [buttons]="buttons"
+                (rowClick)="onRowClick($event)">
+            </app-data-table>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="add" tabindex="-1" role="dialog" aria-labelledby="addCommandeTitle">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addCommandeTitle">Nouvelle commande d'achat</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form [formGroup]="commandeFrom" (ngSubmit)="addcommande()" id="addpre">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="id_fournisseur">Fournisseur <span class="text-danger">*</span></label>
+                        <select formControlName="id_fournisseur" class="form-control" id="id_fournisseur" required>
+                            <option value="" disabled selected>Sélectionnez un fournisseur</option>
+                            <option *ngFor="let fournisseur of listFournis" [value]="fournisseur.id">
+                                {{fournisseur.nom}}
+                            </option>
+                        </select>
+                    </div>
+                    <hr>
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h6 class="mb-0">Produits</h6>
+                        <button type="button" class="btn btn-sm btn-success" (click)="addProduit()">
+                            <i class="fas fa-plus mr-1"></i>Ajouter produit
+                        </button>
+                    </div>
+                    <div formArrayName="produits">
+                        <div *ngFor="let item of produits.controls; let i=index" [formGroupName]="i"
+                            class="border p-3 mb-3">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label [for]="'produit_'+i">Produit <span class="text-danger">*</span></label>
+                                        <select class="form-control" [id]="'produit_'+i" formControlName="id" required>
+                                            <option value="" disabled selected>Sélectionnez un produit</option>
+                                            <option *ngFor="let produit of listProduit" [value]="produit.id">
+                                                {{produit.code}} - {{produit.nom}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label [for]="'quantite_'+i">Quantité <span class="text-danger">*</span></label>
+                                        <input type="number" class="form-control" [id]="'quantite_'+i"
+                                            formControlName="quantiteDispo_produit" placeholder="Quantité" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label [for]="'prix_'+i">Prix d'achat <span class="text-danger">*</span></label>
+                                        <input type="number" class="form-control" [id]="'prix_'+i"
+                                            formControlName="prix_achat" placeholder="Prix d'achat" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <button *ngIf="i > 0" type="button" class="btn btn-sm btn-danger mt-2"
+                                (click)="removeProduit(i)">
+                                <i class="fas fa-trash mr-1"></i>Supprimer
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                    <button type="submit" class="btn btn-primary" [disabled]="!commandeFrom.valid">
+                        <i class="fas fa-save mr-1"></i>
+                        Enregistrer
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- <div class="modal fade" id="editCommande" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content" *ngIf="commandeAchat!=null">
+            <div class="modal-header">
+                <span class="title">Modifier fournisseur</span>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form #pre="ngForm" (ngSubmit)="edit(pre.value)" id="editCatgform">
+                <div class="modal-body">
+                    <div class="form-group float-label-control">
+                        <input type="text" class="form-control" autocomplete="off" name="nomFournisseur"
+                            [(ngModel)]="commandeAchat.nomFournisseur" placeholder="nom Fournisseur" required>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group float-label-control">
+                        <input type="email" class="form-control" autocomplete="off" name="email"
+                            [(ngModel)]="commandeAchat.email" placeholder="email" required>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group float-label-control">
+                        <input type="text" class="form-control" autocomplete="off" name="adressFournisseur"
+                            [(ngModel)]="commandeAchat.adressFournisseur" placeholder="adress Fournisseur" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                    <button type="submit" class="btn btn-primary">Enregister</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div> -->
+
+<app-delete-modal modalId="deleteCommande" title="Confirmation de suppression"
+    message="Êtes-vous sûr de vouloir supprimer cette commande ?" [itemName]="list_orders?.codeCmd"
+    [disabled]="!itemSelected" (confirmDelete)="delete()">
+</app-delete-modal>
+
+<div class="modal fade" id="chechekStatus" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="title">Valider Commande</span>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" *ngIf="selectedOrder">
+                <div class="row">
+                    <div class="col-md-10 offset-md-1">
+                        <h2 class="text-center">Commande {{selectedOrder.code}}</h2>
+                        <table class="table table-bordered">
+                            <tr>
+                                <th width="30%">Code</th>
+                                <td width="2%">:</td>
+                                <td>
+                                    {{selectedOrder.code}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th width="30%">Ajouter le </th>
+                                <td width="2%">:</td>
+                                <td>
+                                    {{selectedOrder.date_ajout}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th width="30%">Fournisseur </th>
+                                <td width="2%">:</td>
+                                <td>
+                                    {{selectedOrder.nomFournisseur}}
+                                </td>
+                            </tr>
+                            <tr *ngIf="selectedOrder.statut=='EN_COURS'">
+                                <th width="30%">Statut</th>
+                                <td width="2%">:</td>
+                                <td>Commande en attente d'acceptation</td>
+                            </tr>
+                            <tr *ngIf="selectedOrder.statut=='VALIDEE'">
+                                <th width="30%">Statut</th>
+                                <td width="2%">:</td>
+                                <td>Commande Accepté</td>
+                            </tr>
+                            <tr *ngIf="selectedOrder.statut=='REFUSE'">
+                                <th width="30%">Statut</th>
+                                <td width="2%">:</td>
+                                <td>Commande refusé</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 offset-md-3">
+                        <h2 class="text-center">Les produits commandée</h2>
+                        <table class="table table-bordered">
+                            <tr>
+                                <th width="33%">Produit</th>
+                                <th width="33%">Prix achat </th>
+                                <th width="33%">Quantite</th>
+                            </tr>
+                            <tr *ngFor="let pdt of selectedOrder.produits">
+                                <td width="33%">{{pdt.nom}}</td>
+                                <td width="33%">{{pdt.prix_achat}} dt</td>
+                                <td width="33%">
+                                    {{pdt.quantite_stock}}
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="text-center" *ngIf="selectedOrder.statut=='EN_COURS'">
+                    <div class="btn-group" role="group" aria-label="Basic example">
+                        <button type="button" class="btn btn-success" (click)="accepterCommande()">Accepter</button>
+                        <button type="button" class="btn btn-danger" (click)="refuserCommande()">Refuser</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,22 @@
+<section class="login-clean">
+    <form #userLogin="ngForm" (ngSubmit)="login(userLogin.value)">
+        <div class="illustration">
+            <h1>Connexion</h1>
+        </div>
+        <div class="form-group">
+            <input required class="form-control" ngModel type="email" name="userName" placeholder="E-mail"
+                #email="ngModel" [class.is-invalid]="email.invalid && email.touched">
+        </div>
+        <div class="form-group">
+            <input required class="form-control" ngModel type="password" name="password" placeholder="Mot de passe"
+                #password="ngModel" [class.is-invalid]="password.invalid && password.touched">
+        </div>
+
+        <div class="form-group">
+            <button class="btn btn-primary" type="submit" [disabled]="userLogin.invalid">
+                Connexion
+            </button>
+        </div>
+        <!--<a class="forgot" href="#">Mot de passe oublié ?</a>-->
+    </form>
+</section>

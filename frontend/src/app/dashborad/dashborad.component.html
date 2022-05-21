@@ -1,0 +1,94 @@
+<div class="dashboard-container">
+    <!-- Top Navigation -->
+    <nav class="topnav">
+        <div class="d-flex align-items-center">
+            <button class="btn btn-link text-white" (click)="toggleSidenav()">
+                <i class="fas fa-bars"></i>
+            </button>
+            <a class="topnav__brand" [routerLink]="['/dashboard/home']">StockManager</a>
+        </div>
+
+        <div class="topnav__right">
+            <!-- Notifications -->
+            <div class="dropdown">
+                <a class="btn btn-link text-white notification-badge"
+                    (click)="notificationComponent.toggleDropdown($event)">
+                    <i class="fa fa-bell"></i>
+                    <span class="badge badge-warning" *ngIf="unreadCount > 0">{{unreadCount}}</span>
+                </a>
+                <app-notification #notificationComponent></app-notification>
+            </div>
+
+            <!-- Profile & Logout -->
+            <a class="btn btn-link text-white" [routerLink]="['/profile']">
+                <i class="fas fa-user"></i>
+            </a>
+            <button class="btn btn-link text-white" (click)="deconnect()">
+                <i class="fas fa-sign-out-alt"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Overlay -->
+    <div class="mobile-overlay" [class.show]="isMobileMenuOpen" (click)="toggleSidenav()"></div>
+
+    <!-- Side Navigation -->
+    <aside class="sidenav" [class.collapsed]="isSidenavCollapsed && !isMobileMenuOpen"
+        [class.mobile-open]="isMobileMenuOpen">
+        <ul class="nav flex-column">
+            <li class="sidenav__nav-item">
+                <a class="nav-link" [routerLink]="['']">
+                    <i class="fa-solid fa-house-chimney"></i>
+                    <span class="nav-link-text">Accueil</span>
+                </a>
+            </li>
+            <li class="sidenav__nav-item">
+                <a class="nav-link" [routerLink]="['/category']">
+                    <i class="fa-solid fa-list-ul"></i>
+                    <span class="nav-link-text">Categorie(s)</span>
+                </a>
+            </li>
+            <li class="sidenav__nav-item">
+                <a class="nav-link" [routerLink]="['/produit']">
+                    <i class="fa-solid fa-bars"></i>
+                    <span class="nav-link-text">Produit(s)</span>
+                </a>
+            </li>
+            <li class="sidenav__nav-item">
+                <a class="nav-link" [routerLink]="['/fournisseur']">
+                    <i class="fa-solid fa-users"></i>
+                    <span class="nav-link-text">Fournisseur(s)</span>
+                </a>
+            </li>
+            <li class="sidenav__nav-item">
+                <a class="nav-link" [routerLink]="['/achat']">
+                    <i class="fa-solid fa-cart-shopping"></i>
+                    <span class="nav-link-text">Achat(s)</span>
+                </a>
+            </li>
+            <li class="sidenav__nav-item">
+                <a class="nav-link" [routerLink]="['/ventes']">
+                    <i class="fa-solid fa-shopping-cart"></i>
+                    <span class="nav-link-text">Vente(s)</span>
+                </a>
+            </li>
+            <li class="sidenav__nav-item">
+                <a class="nav-link" [routerLink]="['/customers']">
+                    <i class="fa-solid fa-users"></i>
+                    <span class="nav-link-text">Clients</span>
+                </a>
+            </li>
+            <li class="sidenav__nav-item">
+                <a class="nav-link" [routerLink]="['/users']">
+                    <i class="fa-solid fa-user-gear"></i>
+                    <span class="nav-link-text">Utilisateurs</span>
+                </a>
+            </li>
+        </ul>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content" [class.expanded]="isSidenavCollapsed && !isMobileMenuOpen">
+        <router-outlet></router-outlet>
+    </main>
+</div>

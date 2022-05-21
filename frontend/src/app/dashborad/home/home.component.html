@@ -1,0 +1,115 @@
+<div class="container-fluid">
+    <div class="row mb-4">
+        <!-- Statistiques des produits -->
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                Produits</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{stats.totalProducts}}</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-box fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Statistiques des catégories -->
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-success shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                Catégories</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{stats.totalCategories}}</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-tags fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Statistiques des fournisseurs -->
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-info shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                                Fournisseurs</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{stats.totalSuppliers}}</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-truck fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Statistiques des clients -->
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-warning shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                Clients</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{stats.totalCustomers}}</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-users fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Statistiques des commandes -->
+    <div class="row">
+        <div class="col-lg-6 mb-4">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">État des commandes</h6>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <div class="small text-gray-500">Commandes en attente</div>
+                        <div class="progress mb-4">
+                            <div class="progress-bar bg-warning" role="progressbar"
+                                [style.width]="(stats.pendingOrders / stats.totalOrders * 100) + '%'">
+                                {{stats.pendingOrders}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="small text-gray-500">Commandes acceptées</div>
+                        <div class="progress mb-4">
+                            <div class="progress-bar bg-success" role="progressbar"
+                                [style.width]="(stats.acceptedOrders / stats.totalOrders * 100) + '%'">
+                                {{stats.acceptedOrders}}
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="small text-gray-500">Commandes refusées</div>
+                        <div class="progress">
+                            <div class="progress-bar bg-danger" role="progressbar"
+                                [style.width]="(stats.rejectedOrders / stats.totalOrders * 100) + '%'">
+                                {{stats.rejectedOrders}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

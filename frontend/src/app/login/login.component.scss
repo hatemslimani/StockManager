@@ -1,0 +1,115 @@
+// Color Variables (matching dashboard theme)
+$primary-color: #f9f9f9;
+$accent-color: #3498db;
+$light-color: #ecf0f1;
+$text-dark: #2c3e50;
+$error-color: #e74c3c;
+
+.login-clean {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: $primary-color;
+    padding: 20px;
+
+    form {
+        width: 100%;
+        max-width: 420px;
+        background-color: #ffffff;
+        padding: 2.5rem;
+        border-radius: 8px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+
+        .illustration {
+            text-align: center;
+            margin-bottom: 2rem;
+
+            h1 {
+                color: $text-dark;
+                font-size: 2rem;
+                font-weight: 600;
+                margin-bottom: 0;
+            }
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+
+            .form-control {
+                height: 48px;
+                padding: 0.75rem 1rem;
+                background-color: $light-color;
+                border: 2px solid transparent;
+                border-radius: 6px;
+                transition: all 0.3s ease;
+                font-size: 1rem;
+
+                &:focus {
+                    border-color: $accent-color;
+                    box-shadow: 0 0 0 3px rgba($accent-color, 0.1);
+                    background-color: #ffffff;
+                }
+
+                &.ng-invalid.ng-touched {
+                    border-color: $error-color;
+                    background-color: rgba($error-color, 0.05);
+                }
+            }
+        }
+
+        .btn-primary {
+            width: 100%;
+            padding: 0.75rem;
+            background: $accent-color;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+
+            &:hover {
+                background: darken($accent-color, 10%);
+                transform: translateY(-1px);
+                box-shadow: 0 4px 12px rgba($accent-color, 0.2);
+            }
+
+            &:active {
+                transform: translateY(0);
+                box-shadow: none;
+            }
+        }
+
+        .forgot {
+            display: block;
+            text-align: center;
+            color: $text-dark;
+            margin-top: 1rem;
+            text-decoration: none;
+            font-size: 0.9rem;
+            opacity: 0.8;
+            transition: opacity 0.3s ease;
+
+            &:hover {
+                opacity: 1;
+            }
+        }
+    }
+}
+
+// Responsive adjustments
+@media (max-width: 576px) {
+    .login-clean {
+        padding: 15px;
+
+        form {
+            padding: 1.5rem;
+
+            .illustration h1 {
+                font-size: 1.75rem;
+            }
+        }
+    }
+}

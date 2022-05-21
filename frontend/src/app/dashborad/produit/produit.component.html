@@ -1,0 +1,150 @@
+<div class="row">
+  <div class="col-md-12">
+    <app-breadcrumb [items]="breadcrumbItems"></app-breadcrumb>
+  </div>
+</div>
+
+<div class="table-responsive" [hidden]="!showlist">
+  <div class="card text-center cc">
+    <div class="card-body">
+      <app-data-table [columns]="columns" [data]="listcat" [buttons]="buttons" (rowClick)="onRowClick($event)">
+      </app-data-table>
+    </div>
+  </div>
+</div>
+<div class=" modal fade " id="add" tabindex="-1" role="dialog" aria-labelledby="addProduitTitle">
+  <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+    <div class="modal-content" *ngIf="listCategory">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addProduitTitle">Ajouter un produit</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form #pre="ngForm" (ngSubmit)="addProduct(pre.value)" id="addProduct">
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="code">Code</label>
+                <input type="text" class="form-control" id="code" name="code" ngModel required>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="nom">Nom du produit</label>
+                <input type="text" class="form-control" id="nom" name="nom" ngModel required>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="marque">Marque</label>
+                <input type="text" class="form-control" id="marque" name="marque" ngModel>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="prix_unitaire">Prix unitaire</label>
+                <input type="number" class="form-control" id="prix_unitaire" name="prix_unitaire" ngModel required>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="prix_achat">Prix d'achat</label>
+                <input type="number" class="form-control" id="prix_achat" name="prix_achat" ngModel required>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="quantite_stock">Quantité en stock</label>
+                <input type="number" class="form-control" id="quantite_stock" name="quantite_stock" ngModel required>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="code_barres">Code-barres</label>
+                <input type="text" class="form-control" id="code_barres" name="code_barres" ngModel>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="unite_mesure">Unité de mesure</label>
+                <select class="form-control" id="unite_mesure" name="unite_mesure" ngModel>
+                  <option value="UNITE">Unité</option>
+                  <option value="KG">Kilogramme</option>
+                  <option value="LITRE">Litre</option>
+                  <option value="METRE">Mètre</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="date_expiration">Date d'expiration</label>
+                <input type="date" class="form-control" id="date_expiration" name="date_expiration" ngModel>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="origine">Origine</label>
+                <input type="text" class="form-control" id="origine" name="origine" ngModel>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="dimensions">Dimensions</label>
+                <input type="text" class="form-control" id="dimensions" name="dimensions" ngModel>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="id_categorie">Catégorie</label>
+                <select class="form-control" id="id_categorie" name="id_categorie" ngModel required>
+                  <option value="" disabled selected>Sélectionnez une catégorie</option>
+                  <option *ngFor="let category of listCategory" [value]="category.id">
+                    {{category.nom}}
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-8">
+              <div class="form-group">
+                <label for="description">Description</label>
+                <textarea class="form-control" id="description" name="description" ngModel rows="3"></textarea>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="image">Image</label>
+                <input type="file" class="form-control-file" id="image" (change)="onSelect($event)" name="image"
+                  required>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+          <button type="submit" class="btn btn-primary" [disabled]="!pre.valid">
+            <i class="fas fa-save mr-1"></i>
+            Enregistrer
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<app-delete-modal modalId="deleteProduit" title="Confirmation de suppression"
+  message="Êtes-vous sûr de vouloir supprimer ce produit ?" [itemName]="listcat?.nom" [disabled]="!itemSelected"
+  (confirmDelete)="deleteProduit()">
+</app-delete-modal>

@@ -1,0 +1,51 @@
+.table-container {
+    .table-actions {
+        display: flex;
+        justify-content: space-between;
+        
+
+        .search-box {
+            width: 300px;
+        }
+    }
+
+    .table {
+        th {
+            cursor: pointer;
+            position: relative;
+
+            &.sorting:after {
+                content: "⇕";
+                position: absolute;
+                right: 8px;
+                opacity: 0.3;
+            }
+
+            &.sorting_asc:after {
+                content: "↑";
+                opacity: 1;
+            }
+
+            &.sorting_desc:after {
+                content: "↓";
+                opacity: 1;
+            }
+        }
+
+        tr.selected {
+            background-color: rgba(0, 123, 255, 0.1);
+        }
+
+        .table-img {
+            max-height: 50px;
+            max-width: 50px;
+            object-fit: contain;
+        }
+    }
+
+    .pagination {
+        .page-link {
+            cursor: pointer;
+        }
+    }
+}

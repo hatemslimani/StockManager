@@ -1,0 +1,188 @@
+<div class="row">
+    <div class="col-md-12">
+        <app-breadcrumb [items]="breadcrumbItems"></app-breadcrumb>
+    </div>
+</div>
+
+<div class="table-responsive" [hidden]="!showlist">
+    <div class="card text-center cc">
+        <div class="card-body">
+            <app-data-table [columns]="columns" [data]="list_customer" [buttons]="buttons"
+                (rowClick)="onRowClick($event)">
+            </app-data-table>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Ajout -->
+<div class="modal fade" id="add" tabindex="-1" role="dialog" aria-labelledby="addCustomerTitle">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addCustomerTitle">Ajouter un client</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form #pre="ngForm" (ngSubmit)="addCustomer(pre.value)" id="addCustomer">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="nom">Nom <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="nom" name="nom" ngModel required>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="prenom">Prénom <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="prenom" name="prenom" ngModel required>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="email">Email <span class="text-danger">*</span></label>
+                                <input type="email" class="form-control" id="email" name="email" ngModel required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="telephone">Téléphone <span class="text-danger">*</span></label>
+                                <input type="tel" class="form-control" id="telephone" name="telephone" ngModel required>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="form-group">
+                                <label for="adresse">Adresse <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="adresse" name="adresse" ngModel required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="ville">Ville <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="ville" name="ville" ngModel required>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="code_postal">Code postal <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="code_postal" name="code_postal" ngModel
+                                    required>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="pays">Pays <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="pays" name="pays" ngModel required>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                    <button type="submit" class="btn btn-primary" [disabled]="!pre.valid">
+                        <i class="fas fa-save mr-1"></i>
+                        Enregistrer
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de suppression -->
+<app-delete-modal modalId="deleteCustomer" title="Confirmation de suppression"
+    message="Êtes-vous sûr de vouloir supprimer ce client ?" [itemName]="customer?.nom + ' ' + customer?.prenom"
+    [disabled]="!itemSelected" (confirmDelete)="delete()">
+</app-delete-modal>
+
+<!-- Modal Modification -->
+<div class="modal fade" id="editCustomer" tabindex="-1" role="dialog" aria-labelledby="editCustomerTitle">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content" *ngIf="customer">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editCustomerTitle">Modifier le client</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form #pre="ngForm" (ngSubmit)="edit(pre.value)" id="editCustomerForm">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="edit_nom">Nom <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="edit_nom" name="nom"
+                                    [(ngModel)]="customer.nom" required>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="edit_prenom">Prénom <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="edit_prenom" name="prenom"
+                                    [(ngModel)]="customer.prenom" required>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="edit_email">Email <span class="text-danger">*</span></label>
+                                <input type="email" class="form-control" id="edit_email" name="email"
+                                    [(ngModel)]="customer.email" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="edit_telephone">Téléphone <span class="text-danger">*</span></label>
+                                <input type="tel" class="form-control" id="edit_telephone" name="telephone"
+                                    [(ngModel)]="customer.telephone" required>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="form-group">
+                                <label for="edit_adresse">Adresse <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="edit_adresse" name="adresse"
+                                    [(ngModel)]="customer.adresse" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="edit_ville">Ville <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="edit_ville" name="ville"
+                                    [(ngModel)]="customer.ville" required>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="edit_code_postal">Code postal <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="edit_code_postal" name="code_postal"
+                                    [(ngModel)]="customer.code_postal" required>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="edit_pays">Pays <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="edit_pays" name="pays"
+                                    [(ngModel)]="customer.pays" required>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                    <button type="submit" class="btn btn-primary" [disabled]="!pre.valid">
+                        <i class="fas fa-save mr-1"></i>
+                        Enregistrer
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

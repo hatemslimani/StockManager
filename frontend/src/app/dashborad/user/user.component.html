@@ -1,0 +1,126 @@
+<div class="row">
+    <div class="col-md-12">
+        <app-breadcrumb [items]="breadcrumbItems"></app-breadcrumb>
+    </div>
+</div>
+
+<div class="table-responsive" [hidden]="!showlist">
+    <div class="card text-center cc">
+        <div class="card-body">
+            <app-data-table [columns]="columns" [data]="list_users" [buttons]="buttons" (rowClick)="onRowClick($event)">
+            </app-data-table>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Ajout -->
+<div class="modal fade" id="add" tabindex="-1" role="dialog" aria-labelledby="addUserTitle">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addUserTitle">Ajouter un utilisateur</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form #pre="ngForm" (ngSubmit)="addUser(pre.value)" id="addUser">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="username">Nom d'utilisateur <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="username" name="username" ngModel required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email <span class="text-danger">*</span></label>
+                        <input type="email" class="form-control" id="email" name="email" ngModel required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Mot de passe <span class="text-danger">*</span></label>
+                        <input type="password" class="form-control" id="password" name="password" ngModel required>
+                    </div>
+                    <div class="form-group">
+                        <label for="role">Rôle <span class="text-danger">*</span></label>
+                        <select class="form-control" id="role" name="role" ngModel required>
+                            <option value="USER">Utilisateur</option>
+                            <option value="ADMIN">Administrateur</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                    <button type="submit" class="btn btn-primary" [disabled]="!pre.valid">
+                        <i class="fas fa-save mr-1"></i>
+                        Enregistrer
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Modification -->
+<div class="modal fade" id="editUser" tabindex="-1" role="dialog" aria-labelledby="editUserTitle">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content" *ngIf="user">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editUserTitle">Modifier l'utilisateur</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form #pre="ngForm" (ngSubmit)="edit(pre.value)" id="editUserForm">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="edit_username">Nom d'utilisateur <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="edit_username" name="username"
+                            [(ngModel)]="user.username" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit_email">Email <span class="text-danger">*</span></label>
+                        <input type="email" class="form-control" id="edit_email" name="email" [(ngModel)]="user.email"
+                            required>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit_role">Rôle <span class="text-danger">*</span></label>
+                        <select class="form-control" id="edit_role" name="role" [(ngModel)]="user.role" required>
+                            <option value="USER">Utilisateur</option>
+                            <option value="ADMIN">Administrateur</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                    <button type="submit" class="btn btn-primary" [disabled]="!pre.valid">
+                        <i class="fas fa-save mr-1"></i>
+                        Enregistrer
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de suppression -->
+<div class="modal fade" id="deleteUser" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Confirmation de suppression</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Êtes-vous sûr de vouloir supprimer cet utilisateur ?</p>
+                <p class="text-muted mb-0" *ngIf="user">
+                    Utilisateur : <strong>{{user.username}}</strong>
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                <button type="button" class="btn btn-danger" (click)="delete()">
+                    <i class="fas fa-trash mr-1"></i>Supprimer
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

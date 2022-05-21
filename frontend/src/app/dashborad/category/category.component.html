@@ -1,0 +1,190 @@
+<div class="row">
+  <div class="col-md-12">
+    <app-breadcrumb [items]="breadcrumbItems"></app-breadcrumb>
+  </div>
+</div>
+
+<div class="table-responsive" [hidden]="!showlist">
+  <div class="card text-center cc">
+    <div class="card-body">
+      <app-data-table [columns]="columns" [data]="listcat" [buttons]="buttons" (rowClick)="onRowClick($event)">
+      </app-data-table>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="add" tabindex="-1" role="dialog" aria-labelledby="addCategoryTitle">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addCategoryTitle">Ajouter une catégorie</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form #pre="ngForm" (ngSubmit)="addCategory(pre.value)" id="addpre">
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="libCateg">Nom de la catégorie</label>
+            <input type="text" class="form-control" id="libCateg" name="libCateg" ngModel required
+              placeholder="Entrez le nom de la catégorie">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+          <button type="submit" class="btn btn-primary" [disabled]="!pre.valid">
+            <i class="fas fa-save mr-1"></i>
+            Enregistrer
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="editCategory" tabindex="-1" role="dialog" aria-labelledby="editCategoryTitle">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content" *ngIf="category">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editCategoryTitle">Modifier la catégorie</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form #pre="ngForm" (ngSubmit)="editCategory(pre.value)" id="editCatgform">
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="nomcategor">Nom de la catégorie</label>
+            <input type="text" class="form-control" id="editLibCateg" name="nom" [(ngModel)]="category.libCateg"
+              required placeholder="Entrez le nom de la catégorie">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+          <button type="submit" class="btn btn-primary" [disabled]="!pre.valid">
+            <i class="fas fa-save mr-1"></i>
+            Enregistrer
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<app-delete-modal modalId="deleteCateg" title="Confirmation de suppression"
+  message="Êtes-vous sûr de vouloir supprimer cette catégorie ?" [itemName]="category?.libCateg"
+  [disabled]="!itemSelected" (confirmDelete)="deleteCategory()">
+</app-delete-modal>
+
+<!-- <div class="modal fade " id="chechekStatus" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <span class="title">Valider pré-rattrapage</span>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body" *ngIf="preRattrapage">
+          <div class="row">
+            <div class="col-md-10 offset-md-1">
+              <table class="table table-bordered">
+                <tr>
+                  <th width="30%">Enseignant</th>
+                  <td width="2%">:</td>
+                  <td>
+                    {{preRattrapage.nom_Ensi}}
+                  </td>
+                </tr>
+                <tr>
+                  <th width="30%">Groupe </th>
+                  <td width="2%">:</td>
+                  <td>
+                    {{preRattrapage.nom_niveau}}
+                  </td>
+                </tr>
+                <tr>
+                  <th width="30%">Matiére </th>
+                  <td width="2%">:</td>
+                  <td>
+                    {{preRattrapage.matiere}}
+                  </td>
+                </tr>
+                <tr *ngIf="preRattrapage.status==0">
+                  <th width="30%">Statut</th>
+                  <td width="2%">:</td>
+                  <td>Pre-Rattrapage en attente d'acceptation</td>
+                </tr>
+                <tr *ngIf="preRattrapage.status==1">
+                  <th width="30%">Statut</th>
+                  <td width="2%">:</td>
+                  <td>Pre-Rattrapage Accepté</td>
+                </tr>
+                <tr *ngIf="preRattrapage.status==3">
+                  <th width="30%">Statut</th>
+                  <td width="2%">:</td>
+                  <td>Pre-rattrapage refusé</td>
+                </tr>
+              </table>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <h1 class="text-center">Absence prévue</h1>
+              <table class="table table-bordered">
+                <tr>
+                  <th width="30%">Date</th>
+                  <td width="2%">:</td>
+                  <td>
+                    {{preRattrapage.dateAbsence}}
+                  </td>
+                </tr>
+                <tr>
+                  <th width="30%">Seance </th>
+                  <td width="2%">:</td>
+                  <td>
+                    {{preRattrapage.abNom_Seance}}
+                  </td>
+                </tr>
+                <tr>
+                  <th width="30%">Salle</th>
+                  <td width="2%">:</td>
+                  <td>{{preRattrapage.abNom_salle}}</td>
+                </tr>
+              </table>
+            </div>
+            <div class="col-md 6">
+              <h1 class="text-center">Remplacement</h1>
+              <table class="table table-bordered">
+                <tr>
+                  <th width="30%">Date </th>
+                  <td width="2%">:</td>
+                  <td>
+                    {{preRattrapage.dateRatt}}
+                  </td>
+                </tr>
+                <tr>
+                  <th width="30%">Seance </th>
+                  <td width="2%">:</td>
+                  <td>
+                    {{preRattrapage.nom_Seance}}
+                  </td>
+                </tr>
+                <tr>
+                  <th width="30%">Salle </th>
+                  <td width="2%">:</td>
+                  <td>{{preRattrapage.nom_salle}}</td>
+                </tr>
+              </table>
+            </div>
+          </div>
+          <div class="text-center" *ngIf="preRattrapage.status==0">
+            <div class="btn-group" role="group" aria-label="Basic example">
+              <button type="button" class="btn btn-success" (click)="accepterCertificat(1)">Accepter</button>
+              <button type="button" class="btn btn-danger" (click)="refuserCertificat(2)">Refuser</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div> -->

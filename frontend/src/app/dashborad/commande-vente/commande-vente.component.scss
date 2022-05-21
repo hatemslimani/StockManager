@@ -1,0 +1,51 @@
+.table {
+    th {
+        background-color: #f8f9fa;
+        font-weight: 500;
+    }
+
+    td {
+        vertical-align: middle;
+    }
+}
+
+.btn-sm {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.875rem;
+}
+
+.modal-lg {
+    max-width: 900px;
+}
+
+.status-badge {
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+
+    &.en-attente {
+        background-color: #fff3cd;
+        color: #856404;
+    }
+
+    &.validee {
+        background-color: #d4edda;
+        color: #155724;
+    }
+
+    &.livree {
+        background-color: #cce5ff;
+        color: #004085;
+    }
+
+    &.annulee {
+        background-color: #f8d7da;
+        color: #721c24;
+    }
+}
+
+.total-row {
+    font-weight: bold;
+    background-color: #f8f9fa;
+}

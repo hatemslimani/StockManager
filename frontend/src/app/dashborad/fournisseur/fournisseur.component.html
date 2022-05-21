@@ -1,0 +1,163 @@
+<div class="row">
+    <div class="col-md-12">
+        <app-breadcrumb [items]="breadcrumbItems"></app-breadcrumb>
+    </div>
+</div>
+
+<div class="table-responsive" [hidden]="!showlist">
+    <div class="card text-center cc">
+        <div class="card-body">
+            <app-data-table [columns]="columns" [data]="list_supplier" [buttons]="buttons"
+                (rowClick)="onRowClick($event)">
+            </app-data-table>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="add" tabindex="-1" role="dialog" aria-labelledby="addFournisseurTitle">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addFournisseurTitle">Ajouter un fournisseur</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form #pre="ngForm" (ngSubmit)="addFournisseur(pre.value)" id="addpre">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="nom">Nom</label>
+                                <input type="text" class="form-control" id="nom" name="nom" ngModel required>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="email" class="form-control" id="email" name="email" ngModel required>
+                            </div>
+                            <div class="form-group">
+                                <label for="telephone">Téléphone</label>
+                                <input type="tel" class="form-control" id="telephone" name="telephone" ngModel required>
+                            </div>
+                            <div class="form-group">
+                                <label for="site_web">Site Web</label>
+                                <input type="url" class="form-control" id="site_web" name="site_web" ngModel>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="adresse">Adresse</label>
+                                <input type="text" class="form-control" id="adresse" name="adresse" ngModel required>
+                            </div>
+                            <div class="form-group">
+                                <label for="ville">Ville</label>
+                                <input type="text" class="form-control" id="ville" name="ville" ngModel required>
+                            </div>
+                            <div class="form-group">
+                                <label for="code_postal">Code Postal</label>
+                                <input type="text" class="form-control" id="code_postal" name="code_postal" ngModel
+                                    required>
+                            </div>
+                            <div class="form-group">
+                                <label for="pays">Pays</label>
+                                <input type="text" class="form-control" id="pays" name="pays" ngModel required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="conditions_paiement">Conditions de paiement</label>
+                        <textarea class="form-control" id="conditions_paiement" name="conditions_paiement" ngModel
+                            rows="3"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                    <button type="submit" class="btn btn-primary" [disabled]="!pre.valid">
+                        <i class="fas fa-save mr-1"></i>
+                        Enregistrer
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="editsupplier" tabindex="-1" role="dialog" aria-labelledby="editFournisseurTitle">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content" *ngIf="supplier">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editFournisseurTitle">Modifier le fournisseur</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form #pre="ngForm" (ngSubmit)="edit(pre.value)" id="editCatgform">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="edit_nom">Nom</label>
+                                <input type="text" class="form-control" id="edit_nom" name="nom"
+                                    [(ngModel)]="supplier.nom" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="edit_email">Email</label>
+                                <input type="email" class="form-control" id="edit_email" name="email"
+                                    [(ngModel)]="supplier.email" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="edit_telephone">Téléphone</label>
+                                <input type="tel" class="form-control" id="edit_telephone" name="telephone"
+                                    [(ngModel)]="supplier.telephone" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="edit_site_web">Site Web</label>
+                                <input type="url" class="form-control" id="edit_site_web" name="site_web"
+                                    [(ngModel)]="supplier.site_web">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="edit_adresse">Adresse</label>
+                                <input type="text" class="form-control" id="edit_adresse" name="adresse"
+                                    [(ngModel)]="supplier.adresse" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="edit_ville">Ville</label>
+                                <input type="text" class="form-control" id="edit_ville" name="ville"
+                                    [(ngModel)]="supplier.ville" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="edit_code_postal">Code Postal</label>
+                                <input type="text" class="form-control" id="edit_code_postal" name="code_postal"
+                                    [(ngModel)]="supplier.code_postal" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="edit_pays">Pays</label>
+                                <input type="text" class="form-control" id="edit_pays" name="pays"
+                                    [(ngModel)]="supplier.pays" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit_conditions_paiement">Conditions de paiement</label>
+                        <textarea class="form-control" id="edit_conditions_paiement" name="conditions_paiement"
+                            [(ngModel)]="supplier.conditions_paiement" rows="3"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                    <button type="submit" class="btn btn-primary" [disabled]="!pre.valid">
+                        <i class="fas fa-save mr-1"></i>
+                        Enregistrer
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<app-delete-modal modalId="deleteSupplier" title="Confirmation de suppression"
+    message="Êtes-vous sûr de vouloir supprimer ce fournisseur ?" [itemName]="supplier?.nomFournisseur"
+    [disabled]="!itemSelected" (confirmDelete)="delete()">
+</app-delete-modal>
