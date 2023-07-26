@@ -1,0 +1,21 @@
+pipeline {
+    agent any 
+    stages {
+        stage('clone') { 
+            steps {
+                sh "rm -rf *"
+                sh "git clone https://github.com/hatemslimani/jenkins_helloWorld"
+            }
+        }
+        stage('build') { 
+            steps {
+                sh "cd jenkins_helloWorld/ && javac Main.java"
+            }
+        }
+        stage('run') { 
+            steps {
+                sh "cd jenkins_helloWorld/ && java Main"
+            }
+        }
+    }
+}
