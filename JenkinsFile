@@ -14,7 +14,7 @@ pipeline {
         }
         stage('run') { 
             steps {
-                sh "cd jenkins_helloWorld/ && java main"
+                sh "cd jenkins_helloWorld/ && java Main"
             }
         }
     }
